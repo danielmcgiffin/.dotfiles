@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    outputs.nixosModules.niri
   ];
 
   nixpkgs = {
@@ -49,13 +50,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "colemak";
-  };
+  profiles.niri.enable = true;
 
   services.printing.enable = true;
 
