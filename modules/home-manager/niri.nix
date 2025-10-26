@@ -27,8 +27,8 @@ in {
     configText = lib.mkOption {
       type = lib.types.lines;
       default = ''
-        # Minimal Niri config. Replace or extend via profiles.niri.configText.
-        # Documentation: https://github.com/YaLTeR/niri/tree/main/docs
+        // Minimal Niri config. Replace or extend via profiles.niri.configText.
+        // Documentation: https://github.com/YaLTeR/niri/tree/main/docs
         input {
           keyboard {
             xkb {
@@ -39,8 +39,13 @@ in {
         }
 
         binds {
-          "Mod+Return" spawn "ghostty"
-          "Mod+Q" quit
+          Mod+Return {
+            spawn "ghostty";
+          }
+
+          Mod+Q {
+            quit;
+          }
         }
       '';
       description = ''
