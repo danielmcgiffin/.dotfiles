@@ -58,6 +58,7 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.starship.enable = true;
   programs.nushell = {
     enable = true;
     configFile.source = ./files/nushell/config.nu;
