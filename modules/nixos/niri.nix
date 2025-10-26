@@ -20,9 +20,10 @@ in {
 
     tuigreetPackage = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.greetd.tuigreet;
+      default = pkgs.tuigreet;
       description = "tuigreet package used by greetd for the login prompt.";
     };
+
 
     extraArgs = lib.mkOption {
       type = lib.types.listOf lib.types.str;
