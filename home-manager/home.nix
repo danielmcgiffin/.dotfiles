@@ -58,8 +58,14 @@
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.nushell = {
+    enable = true;
+    configFile.source = ./files/nushell/config.nu;
+  };
 
   profiles.niri.enable = true;
+
+  xdg.configFile."walker/config.toml".source = ./files/walker/config.toml;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
