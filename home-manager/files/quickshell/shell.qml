@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Services.UPower as UPower
 import Quickshell.Services.Mpris as Mpris
@@ -38,15 +37,7 @@ PanelWindow {
         border.color: bar.steelAccent
         border.width: 1
 
-        layer.enabled: true
-        layer.effect: DropShadow {
-            source: background
-            horizontalOffset: 0
-            verticalOffset: 2
-            radius: 12
-            samples: 17
-            color: "#40000000"
-        }
+        layer.enabled: false
     }
 
     RowLayout {

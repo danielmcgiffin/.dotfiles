@@ -55,6 +55,7 @@
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
     quickshell
+    qt6Packages.qt5compat
   ];
 
   # Enable home-manager and git
@@ -71,6 +72,11 @@
   xdg.configFile."walker/config.toml".source = ./files/walker/config.toml;
   xdg.configFile."quickshell/shell.qml".source = ./files/quickshell/shell.qml;
   home.file."Pictures/wallpapers/steel-battleship.jpg".source = ./files/wallpapers/steel_battleship.jpg;
+
+  home.sessionVariablesExtra = ''
+    export QML2_IMPORT_PATH=${pkgs.qt6Packages.qt5compat}/lib/qt-6/qml''${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}
+    export QML_IMPORT_PATH=${pkgs.qt6Packages.qt5compat}/lib/qt-6/qml''${QML_IMPORT_PATH:+:$QML_IMPORT_PATH}
+  '';
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
