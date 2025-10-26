@@ -53,7 +53,9 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  home.packages = with pkgs; [
+    quickshell
+  ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
@@ -67,6 +69,8 @@
   profiles.niri.enable = true;
 
   xdg.configFile."walker/config.toml".source = ./files/walker/config.toml;
+  xdg.configFile."quickshell/shell.qml".source = ./files/quickshell/shell.qml;
+  home.file."Pictures/wallpapers/steel-battleship.jpg".source = ./files/wallpapers/steel_battleship.jpg;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
