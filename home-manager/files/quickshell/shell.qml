@@ -1,10 +1,11 @@
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Controls
+import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.UPower as UPower
 import Quickshell.Services.Mpris as Mpris
 import Quickshell.Services.SystemTray as Tray
+import Quickshell.Services.UPower as UPower
+import Quickshell.Hyprland as Hyprland
 
 PanelWindow {
     id: bar
@@ -13,230 +14,312 @@ PanelWindow {
     anchors.right: true
     anchors.top: true
 
+    color: "transparent"
     exclusionMode: PanelWindow.ExclusionMode.Auto
-    exclusiveZone: height
     aboveWindows: true
 
-    readonly property color steelBase: "#1b1f24"
-    readonly property color steelHighlight: "#2c323a"
-    readonly property color steelAccent: "#3c444f"
-    readonly property color textStrong: "#e3e8f0"
-    readonly property color textFaded: "#9aa1ab"
-    readonly property color accentColor: "#5c8a9e"
+    readonly property color panelBase: "#11151a"
+    readonly property color panelBorder: "#2a313a"
+    readonly property color chipColor: "#1c242c"
+    readonly property color chipBorder: "#333c45"
+    readonly property color textPrimary: "#e5ecf4"
+    readonly property color textMuted: "#8f9aa7"
+    readonly property color accent: "#4a93b5"
+    readonly property string glyphFont: "CaskaydiaMono Nerd Font"
+    readonly property int chipPadding: 8
+    readonly property int panelRadius: 12
 
-    height: 44
-    margins.top: 6
-    margins.left: 20
-    margins.right: 20
+    height: 36
+    margins.left: 16
+    margins.right: 16
+    margins.top: 10
+    exclusiveZone: height + margins.top
+
+    readonly property var hyprland: Hyprland.Hyprland
 
     Rectangle {
-        id: background
         anchors.fill: parent
-        radius: 12
-        color: bar.steelBase
-        border.color: bar.steelAccent
+        radius: panelRadius
+        color: panelBase
+        border.color: panelBorder
         border.width: 1
+    }
 
-        layer.enabled: false
+    function workspaceIcon(workspaceId, focused) {
+        if (focused) return "\ufb7b"; // 󱓻
+        const glyphs = { 1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8", 9: "9" };
+        return glyphs[workspaceId] ?? "\ue941";
     }
 
     RowLayout {
-        id: layout
         anchors.fill: parent
-        anchors.margins: 12
-        spacing: 16
+        anchors.margins: 8
+        spacing: 12
 
-        // Left segment: branding and quick status.
+        // Left block: glyph + workspaces
         RowLayout {
-            id: leftSegment
             spacing: 8
             Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
 
             Rectangle {
-                width: 16
-                height: 16
-                radius: 4
-                border.color: bar.steelHighlight
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
                 border.width: 1
-                color: bar.accentColor
-            }
-
-            Column {
-                spacing: -2
-                Text {
-                    text: "SteelBar"
-                    color: bar.textStrong
-                    font.bold: true
-                    font.pointSize: 11
-                }
-                Text {
-                    text: Qt.formatDateTime(new Date(), "dddd")
-                    color: bar.textFaded
-                    font.pointSize: 8
-                }
-            }
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        // Center segment: now playing.
-        RowLayout {
-            id: mediaSegment
-            spacing: 8
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-
-            property var players: Mpris.Mpris.players.values
-            property var activePlayer: {
-                for (const player of players) {
-                    if (player.playbackState === Mpris.MprisPlaybackState.Playing) {
-                        return player
-                    }
-                }
-                return players.length > 0 ? players[0] : null
-            }
-
-            Behavior on activePlayer {
-                SequentialAnimation {
-                    PropertyAnimation { duration: 120 }
-                }
-            }
-
-            Text {
-                text: mediaSegment.activePlayer ? mediaSegment.activePlayer.identity : "No player"
-                color: bar.textFaded
-                font.pointSize: 10
-                font.bold: true
-            }
-
-            Text {
-                visible: mediaSegment.activePlayer && mediaSegment.activePlayer.trackTitle.length > 0
-                text: mediaSegment.activePlayer ? "-" : ""
-                color: bar.textFaded
-                font.pointSize: 9
-            }
-
-            Text {
-                text: mediaSegment.activePlayer && mediaSegment.activePlayer.trackTitle.length > 0
-                      ? mediaSegment.activePlayer.trackTitle
-                      : ""
-                color: bar.textStrong
-                font.pointSize: 10
-                elide: Text.ElideRight
-                Layout.preferredWidth: 220
-            }
-        }
-
-        Item {
-            Layout.fillWidth: true
-        }
-
-        // Right segment: battery, tray, clock.
-        RowLayout {
-            id: rightSegment
-            spacing: 12
-            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
-
-            // Battery widget
-            RowLayout {
-                id: batteryWidget
-                property var battery: UPower.UPower.displayDevice
-                spacing: 6
-
-                Rectangle {
-                    id: batteryBody
-                    width: 20
-                    height: 10
-                    radius: 2
-                    border.color: bar.steelHighlight
-                    border.width: 1
-                    color: {
-                        if (!batteryWidget.battery || !batteryWidget.battery.ready)
-                            return bar.steelHighlight
-                        return batteryWidget.battery.percentage <= 20 ? "#a85151" : bar.steelHighlight
-                    }
-
-                    Rectangle {
-                        anchors {
-                            left: parent.left
-                            top: parent.top
-                            bottom: parent.bottom
-                        }
-                        width: parent.width * Math.min(1, Math.max(0, batteryWidget.battery ? batteryWidget.battery.percentage / 100 : 0))
-                        radius: 2
-                        color: batteryWidget.battery && batteryWidget.battery.percentage <= 20 ? "#d96f6f" : bar.accentColor
-                    }
-                }
-
-                Rectangle {
-                    width: 2
-                    height: 4
-                    radius: 1
-                    color: bar.steelHighlight
-                    anchors.verticalCenter: batteryBody.verticalCenter
-                }
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: glyphText.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
 
                 Text {
-                    text: batteryWidget.battery && batteryWidget.battery.ready
-                          ? Math.round(batteryWidget.battery.percentage) + "%"
-                          : "..."
-                    color: bar.textStrong
-                    font.pointSize: 10
+                    id: glyphText
+                    anchors.centerIn: parent
+                    text: "\ue900"
+                    color: accent
+                    font.pixelSize: 15
+                    font.family: glyphFont
                 }
             }
 
-            // System tray icons
-            RowLayout {
-                id: trayRow
-                spacing: 6
+            Rectangle {
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
+                border.width: 1
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: workspaceRow.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
 
-                Repeater {
-                    model: Tray.SystemTray.items
+                RowLayout {
+                    id: workspaceRow
+                    anchors.fill: parent
+                    anchors.margins: bar.chipPadding
+                    spacing: 6
 
-                    delegate: Item {
-                        required property var modelData
-                        width: 18
-                        height: 18
+                    Repeater {
+                        model: bar.hyprland.workspaces.values
 
-                        Image {
-                            anchors.fill: parent
-                            source: modelData.icon
-                            fillMode: Image.PreserveAspectFit
-                            smooth: true
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
+                        delegate: MouseArea {
+                            required property var modelData
+                            implicitWidth: workspaceLabel.implicitWidth
+                            implicitHeight: workspaceLabel.implicitHeight
                             hoverEnabled: true
                             cursorShape: Qt.PointingHandCursor
 
-                            onClicked: {
-                                if (mouse.button === Qt.LeftButton) {
-                                    modelData.activate()
-                                } else if (mouse.button === Qt.RightButton && modelData.hasMenu) {
-                                    modelData.display(bar, mouse.x, mouse.y)
-                                }
+                            onClicked: modelData.activate()
+
+                            Text {
+                                id: workspaceLabel
+                                text: workspaceIcon(modelData.id, modelData.focused)
+                                font.family: glyphFont
+                                font.pixelSize: 12
+                                font.bold: modelData.focused
+                                color: modelData.focused ? textPrimary : textMuted
+                                opacity: modelData.active ? 1.0 : 0.55
                             }
                         }
                     }
                 }
             }
+        }
 
-            // Clock
-            Text {
-                id: clockDisplay
-                property date now: new Date()
-                color: bar.textStrong
-                font.bold: true
-                font.pointSize: 11
-                text: Qt.formatDateTime(now, "HH:mm")
+        Item { Layout.fillWidth: true }
 
-                Timer {
-                    interval: 1000
-                    repeat: true
-                    running: true
-                    onTriggered: clockDisplay.now = new Date()
+        // Center block: media + clock
+        RowLayout {
+            spacing: 10
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+
+            Rectangle {
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
+                border.width: 1
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: mediaRow.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
+
+                RowLayout {
+                    id: mediaRow
+                    anchors.fill: parent
+                    anchors.margins: bar.chipPadding
+                    spacing: 6
+
+                    property var players: Mpris.Mpris.players.values
+                    property var activePlayer: {
+                        for (const player of players) {
+                            if (player.playbackState === Mpris.MprisPlaybackState.Playing) return player;
+                        }
+                        return players.length > 0 ? players[0] : null;
+                    }
+
+                    Text {
+                        text: parent.activePlayer ? parent.activePlayer.identity : "No player"
+                        color: textMuted
+                        font.pixelSize: 10
+                        font.bold: true
+                        font.family: glyphFont
+                    }
+
+                    Text {
+                        text: parent.activePlayer && parent.activePlayer.trackTitle.length > 0
+                              ? parent.activePlayer.trackTitle
+                              : ""
+                        visible: parent.activePlayer && parent.activePlayer.trackTitle.length > 0
+                        color: textPrimary
+                        font.pixelSize: 10
+                        elide: Text.ElideRight
+                        Layout.preferredWidth: 220
+                    }
+                }
+            }
+
+            Rectangle {
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
+                border.width: 1
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: clockText.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
+
+                Text {
+                    id: clockText
+                    anchors.centerIn: parent
+                    property date now: new Date()
+                    text: Qt.formatDateTime(now, "ddd HH:mm")
+                    color: textPrimary
+                    font.pixelSize: 11
+                    font.bold: true
+                    font.family: glyphFont
+
+                    Timer {
+                        interval: 1000
+                        repeat: true
+                        running: true
+                        onTriggered: clockText.now = new Date()
+                    }
+                }
+            }
+        }
+
+        Item { Layout.fillWidth: true }
+
+        // Right block: battery + tray
+        RowLayout {
+            spacing: 8
+            Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+
+            Rectangle {
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
+                border.width: 1
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: batteryRow.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
+
+                RowLayout {
+                    id: batteryRow
+                    anchors.fill: parent
+                    anchors.margins: bar.chipPadding
+                    spacing: 6
+
+                    property var battery: UPower.UPower.displayDevice
+
+                    Rectangle {
+                        id: batteryBody
+                        width: 22
+                        height: 10
+                        radius: 3
+                        border.color: chipBorder
+                        border.width: 1
+                        color: !batteryRow.battery || !batteryRow.battery.ready
+                               ? chipBorder
+                               : batteryRow.battery.percentage <= 20 ? "#b35a5a" : accent
+
+                        Rectangle {
+                            anchors {
+                                left: parent.left
+                                top: parent.top
+                                bottom: parent.bottom
+                                margins: 1
+                            }
+                            width: parent.width * Math.min(
+                                       1,
+                                       Math.max(0, batteryRow.battery ? batteryRow.battery.percentage / 100 : 0)
+                                   ) - 2
+                            radius: 2
+                            color: batteryRow.battery && batteryRow.battery.percentage <= 20 ? "#d27272" : "#d6f6ff"
+                            visible: batteryRow.battery && batteryRow.battery.ready
+                        }
+                    }
+
+                    Rectangle {
+                        width: 3
+                        height: 4
+                        radius: 1
+                        border.color: chipBorder
+                        border.width: 1
+                        color: Qt.darker(chipColor, 1.3)
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Text {
+                        text: batteryRow.battery && batteryRow.battery.ready
+                              ? Math.round(batteryRow.battery.percentage) + "%"
+                              : "…"
+                        color: textPrimary
+                        font.pixelSize: 10
+                        font.family: glyphFont
+                    }
+                }
+            }
+
+            Rectangle {
+                color: chipColor
+                radius: 8
+                border.color: chipBorder
+                border.width: 1
+                implicitHeight: bar.height - bar.chipPadding
+                implicitWidth: trayRow.implicitWidth + bar.chipPadding * 2
+                Layout.alignment: Qt.AlignVCenter
+
+                RowLayout {
+                    id: trayRow
+                    anchors.fill: parent
+                    anchors.margins: bar.chipPadding
+                    spacing: 8
+
+                    Repeater {
+                        model: Tray.SystemTray.items
+
+                        delegate: Item {
+                            required property var modelData
+                            width: 18
+                            height: 18
+
+                            Image {
+                                anchors.fill: parent
+                                source: modelData.icon
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                cursorShape: Qt.PointingHandCursor
+
+                                onClicked: {
+                                    if (mouse.button === Qt.LeftButton) {
+                                        modelData.activate()
+                                    } else if (mouse.button === Qt.RightButton && modelData.hasMenu) {
+                                        modelData.display(bar, mouse.x, mouse.y)
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
