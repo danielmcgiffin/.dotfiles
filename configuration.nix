@@ -108,6 +108,7 @@
    ghostty
    wget
    nodejs
+   syncthing
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -123,6 +124,10 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.tailscale.enable = true;
+  services.syncthing = {
+    enable = true;
+    user = "epicus";
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
