@@ -43,6 +43,14 @@ in {
             spawn "ghostty";
           }
 
+          Mod+B {
+            spawn "firefox";
+          }
+
+          Mod+Shift+F {
+            fullscreen-window;
+          }
+
           Mod+Q {
             quit;
           }
