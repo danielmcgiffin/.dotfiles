@@ -16,37 +16,19 @@ in {
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-    outputs.homeManagerModules.niri
+    inputs.niri.homeModules.niri
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
   ];
 
-  xdg.configFile."niri/config.kdl".source =
-    mkOOS "/home/epicus/.dotfiles/niri/config.kdl";
-
+  xdg.configFile."ghostty/config".source =
+    mkOOS "/home/epicus/.dotfiles/ghostty/config";
   nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
@@ -61,13 +43,17 @@ in {
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
-    quickshell
     qt6Packages.qt5compat
+    carapace
+    nerd-fonts.fira-code
   ];
+
+  fonts.fontconfig.enable = true;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
+  programs.dankMaterialShell.enable = true;
   programs.starship = {
     enable = true;
     settings = {
@@ -147,10 +133,7 @@ in {
     configFile.source = ./files/nushell/config.nu;
   };
 
-  profiles.niri.enable = true;
-
   xdg.configFile."walker/config.toml".source = ./files/walker/config.toml;
-  xdg.configFile."quickshell/shell.qml".source = ./files/quickshell/shell.qml;
   home.file."Pictures/wallpapers/steel-battleship.jpg".source = ./files/wallpapers/steel_battleship.jpg;
 
   home.sessionVariablesExtra = ''
