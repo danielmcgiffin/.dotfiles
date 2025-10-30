@@ -16,14 +16,17 @@
 # You can also pretty-print and page through the documentation for configuration
 # options using:
 #     config nu --doc | nu-highlight | less -R
-alias hx  = helix
+alias hx  = ^hx
+alias helix = ^hx
 alias hxs = sudoedit
 
 $env.STARSHIP_SHELL = "nu"
-$env.PROMPT_COMMAND = { || starship prompt --cmd-duration $env.CMD_DURATION_MS $"--status=($env.LAST_EXIT_CODE)" }
+def "PROMPT_COMMAND" [] {
+    starship prompt
+}
 
-# Tokyo Night color scheme
-$env.config = {
+# Tokyo Night color scheme and completions
+let base_config = {
     color_config: {
         separator: "#565f89"
         leading_trailing_space_bg: { attr: "n" }
@@ -91,3 +94,34 @@ $env.config = {
         shape_vardecl: "#bb9af7"
     }
 }
+
+let carapace_config = if (which carapace | is-empty) {
+    {}
+} else {
+    $env.CARAPACE_BRIDGES = "zsh,fish,bash,elvish"
+    let carapace_completer = {|spans|
+        try {
+            carapace $spans
+            | from json
+            | where value != null
+            | each {|item| { value: $item.value }}
+        } catch {
+            []
+        }
+    }
+    {
+        completions: {
+            case_sensitive: false
+            quick: true
+            partial: true
+            use_ls_colors: true
+            external: {
+                enable: true
+                max_results: 100
+                completer: $carapace_completer
+            }
+        }
+    }
+}
+
+$env.config = ($base_config | merge $carapace_config)
