@@ -120,35 +120,177 @@
     enable = true;
     enableBashIntegration = true;
     settings = {
-      add_newline = true;
-      character = {
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
+      format = lib.concatStrings [
+        "[](fg:#${config.lib.stylix.colors.base0D})"
+        "$username"
+        "[](bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00})"
+        "[](fg:#${config.lib.stylix.colors.base0D} bg:#${config.lib.stylix.colors.base0C})"
+        "$directory"
+        "[](fg:#${config.lib.stylix.colors.base0C} bg:#${config.lib.stylix.colors.base09})"
+        "$git_branch"
+        "$git_status"
+        "[](fg:#${config.lib.stylix.colors.base09} bg:#${config.lib.stylix.colors.base0E})"
+        "$c"
+        "$elixir"
+        "$elm"
+        "$golang"
+        "$gradle"
+        "$haskell"
+        "$java"
+        "$julia"
+        "$nodejs"
+        "$nim"
+        "$rust"
+        "$scala"
+        "$python"
+        "[](fg:#${config.lib.stylix.colors.base0E} bg:#${config.lib.stylix.colors.base0B})"
+        "$docker_context"
+        "$nix_shell"
+        "[](fg:#${config.lib.stylix.colors.base0B} bg:#${config.lib.stylix.colors.base0D})"
+        "$time"
+        "[ ](fg:#${config.lib.stylix.colors.base0D})"
+        "$line_break"
+        "$character"
+      ];
+
+      username = {
+        show_always = true;
+        style_user = "bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00}";
+        style_root = "bg:#${config.lib.stylix.colors.base08} fg:#${config.lib.stylix.colors.base00}";
+        format = "[$user ]($style)";
+        disabled = false;
       };
+
+      directory = {
+        style = "bg:#${config.lib.stylix.colors.base0C} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $path ]($style)";
+        truncation_length = 3;
+        truncation_symbol = "…/";
+      };
+
       git_branch = {
-        symbol = " ";
-        format = "on [$symbol$branch(:$remote_branch)]($style) ";
+        symbol = "";
+        style = "bg:#${config.lib.stylix.colors.base09} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol $branch ]($style)";
       };
+
       git_status = {
-        format = "([$all_status$ahead_behind]($style) )";
-        conflicted = "🏳 ";
+        style = "bg:#${config.lib.stylix.colors.base09} fg:#${config.lib.stylix.colors.base00}";
+        format = "[$all_status$ahead_behind ]($style)";
+        conflicted = "🏳";
         ahead = "⇡\${count}";
         behind = "⇣\${count}";
         diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
+        up_to_date = "✓";
         untracked = "?\${count}";
-        stashed = "$\${count}";
+        stashed = "$";
         modified = "!\${count}";
         staged = "+\${count}";
-        renamed = "»\${count}";
+        renamed = "»";
         deleted = "✘\${count}";
       };
-      directory = {
-        truncation_length = 3;
-        truncate_to_repo = true;
-      };
+
       nix_shell = {
+        symbol = "";
+        style = "bg:#${config.lib.stylix.colors.base0B} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol $state ]($style)";
+      };
+
+      docker_context = {
+        symbol = "";
+        style = "bg:#${config.lib.stylix.colors.base0B} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol $context ]($style)";
+      };
+
+      time = {
+        disabled = false;
+        time_format = "%R";
+        style = "bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ ♥ $time ]($style)";
+      };
+
+      line_break.disabled = false;
+
+      character = {
+        success_symbol = "[➜](bold fg:#${config.lib.stylix.colors.base0B})";
+        error_symbol = "[➜](bold fg:#${config.lib.stylix.colors.base08})";
+      };
+
+      c = {
         symbol = " ";
-        format = "via [$symbol$state]($style) ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      elixir = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      elm = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      golang = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      gradle = {
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      haskell = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      java = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      julia = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      nodejs = {
+        symbol = "";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      nim = {
+        symbol = "󰆥 ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      rust = {
+        symbol = "";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      scala = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
+      };
+
+      python = {
+        symbol = " ";
+        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
+        format = "[ $symbol ($version) ]($style)";
       };
     };
   };
@@ -157,6 +299,44 @@
     enable = true;
     enableSystemd = true;
   };
+
+  # Ghostty terminal theming with Stylix
+  xdg.configFile."ghostty/config".text = ''
+    # Theme using Stylix colors
+    background = ${config.lib.stylix.colors.base00}
+    foreground = ${config.lib.stylix.colors.base05}
+
+    # Normal colors
+    palette = 0=${config.lib.stylix.colors.base00}
+    palette = 1=${config.lib.stylix.colors.base08}
+    palette = 2=${config.lib.stylix.colors.base0B}
+    palette = 3=${config.lib.stylix.colors.base0A}
+    palette = 4=${config.lib.stylix.colors.base0D}
+    palette = 5=${config.lib.stylix.colors.base0E}
+    palette = 6=${config.lib.stylix.colors.base0C}
+    palette = 7=${config.lib.stylix.colors.base05}
+
+    # Bright colors
+    palette = 8=${config.lib.stylix.colors.base03}
+    palette = 9=${config.lib.stylix.colors.base08}
+    palette = 10=${config.lib.stylix.colors.base0B}
+    palette = 11=${config.lib.stylix.colors.base0A}
+    palette = 12=${config.lib.stylix.colors.base0D}
+    palette = 13=${config.lib.stylix.colors.base0E}
+    palette = 14=${config.lib.stylix.colors.base0C}
+    palette = 15=${config.lib.stylix.colors.base07}
+
+    # Font configuration
+    font-family = ${config.stylix.fonts.monospace.name}
+    font-size = 12
+
+    # Cursor
+    cursor-color = ${config.lib.stylix.colors.base05}
+
+    # Window
+    window-padding-x = 8
+    window-padding-y = 8
+  '';
 
   programs.niri.settings = {
     input = {
