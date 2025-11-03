@@ -49,8 +49,8 @@
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
     packages = with pkgs; [
-      inputs.helix.packages.${pkgs.system}.default
-      inputs.ghostty.packages.${pkgs.system}.default
+      inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
       brave
       steam
       signal-desktop
