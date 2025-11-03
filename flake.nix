@@ -64,7 +64,7 @@
       noxbox = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/configuration.nix
+          ./nixos/hosts/noxbox
           home-manager.nixosModules.home-manager
           niri.nixosModules.niri
           stylix.nixosModules.stylix
@@ -75,7 +75,7 @@
       beelink = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [
-          ./nixos/configuration-desktop.nix
+          ./nixos/hosts/beelink
           home-manager.nixosModules.home-manager
           niri.nixosModules.niri
           stylix.nixosModules.stylix
