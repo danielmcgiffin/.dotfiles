@@ -79,7 +79,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = ["mem_sleep_default=deep" "amdgpu.runpm=0"];
+  boot.kernelParams = ["mem_sleep_default=deep" "amdgpu.runpm=0" "amdgpu.dc=1"];
 
   networking = {
     hostName = "beelink";
