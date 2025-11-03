@@ -121,176 +121,77 @@
     enableBashIntegration = true;
     settings = {
       format = lib.concatStrings [
-        "[](fg:#${config.lib.stylix.colors.base0D})"
-        "$username"
-        "[](bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00})"
-        "[](fg:#${config.lib.stylix.colors.base0D} bg:#${config.lib.stylix.colors.base0C})"
+        "[░▒▓](#a3aed2)"
+        "[  ](bg:#a3aed2 fg:#090c0c)"
+        "[](bg:#769ff0 fg:#a3aed2)"
         "$directory"
-        "[](fg:#${config.lib.stylix.colors.base0C} bg:#${config.lib.stylix.colors.base09})"
+        "[](fg:#769ff0 bg:#394260)"
         "$git_branch"
         "$git_status"
-        "[](fg:#${config.lib.stylix.colors.base09} bg:#${config.lib.stylix.colors.base0E})"
-        "$c"
-        "$elixir"
-        "$elm"
-        "$golang"
-        "$gradle"
-        "$haskell"
-        "$java"
-        "$julia"
+        "[](fg:#394260 bg:#212736)"
         "$nodejs"
-        "$nim"
         "$rust"
-        "$scala"
-        "$python"
-        "[](fg:#${config.lib.stylix.colors.base0E} bg:#${config.lib.stylix.colors.base0B})"
-        "$docker_context"
-        "$nix_shell"
-        "[](fg:#${config.lib.stylix.colors.base0B} bg:#${config.lib.stylix.colors.base0D})"
+        "$golang"
+        "$php"
+        "[](fg:#212736 bg:#1d2230)"
         "$time"
-        "[ ](fg:#${config.lib.stylix.colors.base0D})"
-        "$line_break"
-        "$character"
+        "[ ](fg:#1d2230)"
+        "\n$character"
       ];
 
-      username = {
-        show_always = true;
-        style_user = "bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00}";
-        style_root = "bg:#${config.lib.stylix.colors.base08} fg:#${config.lib.stylix.colors.base00}";
-        format = "[$user ]($style)";
-        disabled = false;
-      };
-
       directory = {
-        style = "bg:#${config.lib.stylix.colors.base0C} fg:#${config.lib.stylix.colors.base00}";
+        style = "fg:#e3e5e5 bg:#769ff0";
         format = "[ $path ]($style)";
         truncation_length = 3;
         truncation_symbol = "…/";
+        substitutions = {
+          "Documents" = "󰈙 ";
+          "Downloads" = " ";
+          "Music" = " ";
+          "Pictures" = " ";
+        };
       };
 
       git_branch = {
         symbol = "";
-        style = "bg:#${config.lib.stylix.colors.base09} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol $branch ]($style)";
+        style = "bg:#394260";
+        format = "[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)";
       };
 
       git_status = {
-        style = "bg:#${config.lib.stylix.colors.base09} fg:#${config.lib.stylix.colors.base00}";
-        format = "[$all_status$ahead_behind ]($style)";
-        conflicted = "🏳";
-        ahead = "⇡\${count}";
-        behind = "⇣\${count}";
-        diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
-        up_to_date = "✓";
-        untracked = "?\${count}";
-        stashed = "$";
-        modified = "!\${count}";
-        staged = "+\${count}";
-        renamed = "»";
-        deleted = "✘\${count}";
+        style = "bg:#394260";
+        format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)";
       };
 
-      nix_shell = {
+      nodejs = {
         symbol = "";
-        style = "bg:#${config.lib.stylix.colors.base0B} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol $state ]($style)";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
       };
 
-      docker_context = {
+      rust = {
         symbol = "";
-        style = "bg:#${config.lib.stylix.colors.base0B} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol $context ]($style)";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      golang = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+      };
+
+      php = {
+        symbol = "";
+        style = "bg:#212736";
+        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
       };
 
       time = {
         disabled = false;
         time_format = "%R";
-        style = "bg:#${config.lib.stylix.colors.base0D} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ ♥ $time ]($style)";
-      };
-
-      line_break.disabled = false;
-
-      character = {
-        success_symbol = "[➜](bold fg:#${config.lib.stylix.colors.base0B})";
-        error_symbol = "[➜](bold fg:#${config.lib.stylix.colors.base08})";
-      };
-
-      c = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      elixir = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      elm = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      golang = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      gradle = {
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      haskell = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      java = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      julia = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      nodejs = {
-        symbol = "";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      nim = {
-        symbol = "󰆥 ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      rust = {
-        symbol = "";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      scala = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
-      };
-
-      python = {
-        symbol = " ";
-        style = "bg:#${config.lib.stylix.colors.base0E} fg:#${config.lib.stylix.colors.base00}";
-        format = "[ $symbol ($version) ]($style)";
+        style = "bg:#1d2230";
+        format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)";
       };
     };
   };
@@ -300,38 +201,38 @@
     enableSystemd = true;
   };
 
-  # Ghostty terminal theming with Stylix
+  # Ghostty terminal theming with Cairo Station UNSC aesthetic
   xdg.configFile."ghostty/config".text = ''
-    # Theme using Stylix colors
-    background = ${config.lib.stylix.colors.base00}
-    foreground = ${config.lib.stylix.colors.base05}
+    # Cairo Station UNSC Terminal theme
+    background = 1c2128
+    foreground = c5d0dc
 
     # Normal colors
-    palette = 0=${config.lib.stylix.colors.base00}
-    palette = 1=${config.lib.stylix.colors.base08}
-    palette = 2=${config.lib.stylix.colors.base0B}
-    palette = 3=${config.lib.stylix.colors.base0A}
-    palette = 4=${config.lib.stylix.colors.base0D}
-    palette = 5=${config.lib.stylix.colors.base0E}
-    palette = 6=${config.lib.stylix.colors.base0C}
-    palette = 7=${config.lib.stylix.colors.base05}
+    palette = 0=1c2128
+    palette = 1=e65c5c
+    palette = 2=6bc991
+    palette = 3=f5c66d
+    palette = 4=5b9fdb
+    palette = 5=b48ead
+    palette = 6=4ec9e6
+    palette = 7=c5d0dc
 
     # Bright colors
-    palette = 8=${config.lib.stylix.colors.base03}
-    palette = 9=${config.lib.stylix.colors.base08}
-    palette = 10=${config.lib.stylix.colors.base0B}
-    palette = 11=${config.lib.stylix.colors.base0A}
-    palette = 12=${config.lib.stylix.colors.base0D}
-    palette = 13=${config.lib.stylix.colors.base0E}
-    palette = 14=${config.lib.stylix.colors.base0C}
-    palette = 15=${config.lib.stylix.colors.base07}
+    palette = 8=4a5463
+    palette = 9=e65c5c
+    palette = 10=6bc991
+    palette = 11=f5c66d
+    palette = 12=5b9fdb
+    palette = 13=b48ead
+    palette = 14=4ec9e6
+    palette = 15=f0f6ff
 
     # Font configuration
     font-family = ${config.stylix.fonts.monospace.name}
     font-size = 12
 
     # Cursor
-    cursor-color = ${config.lib.stylix.colors.base05}
+    cursor-color = 4ec9e6
 
     # Window
     window-padding-x = 8
@@ -496,11 +397,13 @@
         on-timeout = loginctl lock-session
     }
 
-    listener {
-        timeout = 630
-        on-timeout = niri msg action power-off-monitors
-        on-resume = niri msg action power-on-monitors
-    }
+    # Disabled: Let monitors handle their own power saving
+    # Monitor power-off was causing wake issues with Niri
+    # listener {
+    #     timeout = 630
+    #     on-timeout = niri msg action power-off-monitors
+    #     on-resume = niri msg action power-on-monitors
+    # }
 
     listener {
         timeout = 1800
@@ -523,49 +426,81 @@
         blur_size = 7
         noise = 0.0117
         contrast = 0.8916
-        brightness = 0.8172
+        brightness = 0.6
         vibrancy = 0.1696
         vibrancy_darkness = 0.0
     }
 
+    # UNSC Authentication Terminal
     input-field {
         monitor =
-        size = 250, 50
-        outline_thickness = 3
-        dots_size = 0.33
-        dots_spacing = 0.15
+        size = 300, 60
+        outline_thickness = 2
+        dots_size = 0.25
+        dots_spacing = 0.3
         dots_center = true
-        outer_color = rgb(24, 25, 38)
-        inner_color = rgb(91, 96, 120)
-        font_color = rgb(202, 211, 245)
+        outer_color = rgb(4ec9e6)      # cyan - holographic border
+        inner_color = rgb(262d36)      # dark panel background
+        font_color = rgb(c5d0dc)       # cool white text
         fade_on_empty = true
-        placeholder_text = <span foreground="##cad3f5">Password...</span>
+        fade_timeout = 1000
+        placeholder_text = <span foreground="##71808f">BIOMETRIC SCAN REQUIRED...</span>
         hide_input = false
         position = 0, -120
         halign = center
         valign = center
+        check_color = rgb(6bc991)      # green - auth success
+        fail_color = rgb(e65c5c)       # red - auth failed
+        fail_text = <span foreground="##e65c5c">ACCESS DENIED</span>
+        capslock_color = rgb(ff8c42)   # orange - warning
     }
 
+    # System Time Display
     label {
         monitor =
-        text = cmd[update:1000] echo "$(date +"%H:%M")"
-        color = rgb(202, 211, 245)
-        font_size = 120
+        text = cmd[update:1000] echo "$(date +"%H%M")"
+        color = rgb(4ec9e6)            # cyan - holographic readout
+        font_size = 140
         font_family = JetBrains Mono
-        position = 0, 80
+        position = 0, 120
         halign = center
         valign = center
     }
 
+    # Date Stamp
     label {
         monitor =
-        text = cmd[update:1000] echo "$(date +"%A, %B %d")"
-        color = rgb(202, 211, 245)
-        font_size = 25
+        text = cmd[update:1000] echo "$(date +"STARDATE: %Y.%m.%d")"
+        color = rgb(71808f)            # muted - secondary info
+        font_size = 16
         font_family = JetBrains Mono
-        position = 0, -40
+        position = 0, 40
         halign = center
         valign = center
+    }
+
+    # Status Indicator
+    label {
+        monitor =
+        text = CAIRO STATION // AUTHENTICATION REQUIRED
+        color = rgb(ff8c42)            # orange - alert status
+        font_size = 14
+        font_family = JetBrains Mono
+        position = 0, -200
+        halign = center
+        valign = center
+    }
+
+    # Bottom Status Bar
+    label {
+        monitor =
+        text = UNSC DEFENSE GRID ACTIVE // ALL SYSTEMS NOMINAL
+        color = rgb(6bc991)            # green - systems operational
+        font_size = 11
+        font_family = JetBrains Mono
+        position = 0, 30
+        halign = center
+        valign = bottom
     }
   '';
 
