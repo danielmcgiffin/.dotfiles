@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  config,
+  ...
+}: {
   programs.bash = {
     enable = true;
   };
@@ -6,28 +10,31 @@
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
-    settings = {
+    settings = let
+      # Cairo Station UNSC color mapping
+      colors = config.lib.stylix.colors;
+    in {
       format = lib.concatStrings [
-        "[░▒▓](#a3aed2)"
-        "[  ](bg:#a3aed2 fg:#090c0c)"
-        "[](bg:#769ff0 fg:#a3aed2)"
+        "[░▒▓](#${colors.base0D})" # UNSC blue gradient
+        "[  ](bg:#${colors.base0D} fg:#${colors.base00})"
+        "[](bg:#${colors.base0C} fg:#${colors.base0D})"
         "$directory"
-        "[](fg:#769ff0 bg:#394260)"
+        "[](fg:#${colors.base0C} bg:#${colors.base02})"
         "$git_branch"
         "$git_status"
-        "[](fg:#394260 bg:#212736)"
+        "[](fg:#${colors.base02} bg:#${colors.base01})"
         "$nodejs"
         "$rust"
         "$golang"
         "$php"
-        "[](fg:#212736 bg:#1d2230)"
+        "[](fg:#${colors.base01} bg:#${colors.base00})"
         "$time"
-        "[ ](fg:#1d2230)"
+        "[ ](fg:#${colors.base00})"
         "\n$character"
       ];
 
       directory = {
-        style = "fg:#e3e5e5 bg:#769ff0";
+        style = "fg:#${colors.base06} bg:#${colors.base0C}"; # Cyan holographic display
         format = "[ $path ]($style)";
         truncation_length = 3;
         truncation_symbol = "…/";
@@ -41,44 +48,44 @@
 
       git_branch = {
         symbol = "";
-        style = "bg:#394260";
-        format = "[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)";
+        style = "bg:#${colors.base02}";
+        format = "[[ $symbol $branch ](fg:#${colors.base0C} bg:#${colors.base02})]($style)";
       };
 
       git_status = {
-        style = "bg:#394260";
-        format = "[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)";
+        style = "bg:#${colors.base02}";
+        format = "[[($all_status$ahead_behind )](fg:#${colors.base0C} bg:#${colors.base02})]($style)";
       };
 
       nodejs = {
         symbol = "";
-        style = "bg:#212736";
-        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        style = "bg:#${colors.base01}";
+        format = "[[ $symbol ($version) ](fg:#${colors.base0C} bg:#${colors.base01})]($style)";
       };
 
       rust = {
         symbol = "";
-        style = "bg:#212736";
-        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        style = "bg:#${colors.base01}";
+        format = "[[ $symbol ($version) ](fg:#${colors.base0C} bg:#${colors.base01})]($style)";
       };
 
       golang = {
         symbol = "";
-        style = "bg:#212736";
-        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        style = "bg:#${colors.base01}";
+        format = "[[ $symbol ($version) ](fg:#${colors.base0C} bg:#${colors.base01})]($style)";
       };
 
       php = {
         symbol = "";
-        style = "bg:#212736";
-        format = "[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)";
+        style = "bg:#${colors.base01}";
+        format = "[[ $symbol ($version) ](fg:#${colors.base0C} bg:#${colors.base01})]($style)";
       };
 
       time = {
         disabled = false;
         time_format = "%R";
-        style = "bg:#1d2230";
-        format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)";
+        style = "bg:#${colors.base00}";
+        format = "[[  $time ](fg:#${colors.base0D} bg:#${colors.base00})]($style)"; # UNSC blue time
       };
     };
   };
