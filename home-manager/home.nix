@@ -111,6 +111,44 @@
       url."ssh://git@github.com/".insteadOf = "https://github.com/";
     };
   };
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = {
+      add_newline = true;
+      character = {
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+      };
+      git_branch = {
+        symbol = " ";
+        format = "on [$symbol$branch(:$remote_branch)]($style) ";
+      };
+      git_status = {
+        format = "([$all_status$ahead_behind]($style) )";
+        conflicted = "🏳 ";
+        ahead = "⇡\${count}";
+        behind = "⇣\${count}";
+        diverged = "⇕⇡\${ahead_count}⇣\${behind_count}";
+        untracked = "?\${count}";
+        stashed = "$\${count}";
+        modified = "!\${count}";
+        staged = "+\${count}";
+        renamed = "»\${count}";
+        deleted = "✘\${count}";
+      };
+      directory = {
+        truncation_length = 3;
+        truncate_to_repo = true;
+      };
+      nix_shell = {
+        symbol = " ";
+        format = "via [$symbol$state]($style) ";
+      };
+    };
+  };
+
   programs.dankMaterialShell = {
     enable = true;
     enableSystemd = true;
