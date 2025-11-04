@@ -1,7 +1,10 @@
-{config, ...}: {
+{config, osConfig, ...}: let
+  # Use Colemak on noxbox, US on beelink
+  keyboardLayout = if osConfig.networking.hostName == "noxbox" then "us(colemak)" else "us";
+in {
   programs.niri.settings = {
     input = {
-      keyboard.xkb.layout = "us";
+      keyboard.xkb.layout = keyboardLayout;
       focus-follows-mouse.enable = true;
     };
 

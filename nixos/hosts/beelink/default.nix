@@ -11,6 +11,9 @@
   # Hostname
   networking.hostName = "beelink";
 
+  # Console keymap
+  console.keyMap = "us";
+
   # Boot configuration
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelParams = ["mem_sleep_default=deep" "amdgpu.runpm=0" "amdgpu.dc=1"];
@@ -23,4 +26,5 @@
 
   # Home-manager backup extension
   home-manager.backupFileExtension = "hm-bak";
+
 }
