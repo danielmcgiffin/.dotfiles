@@ -38,8 +38,6 @@
       nodePackages.vscode-langservers-extracted
       taplo
       alejandra
-      hypridle
-      hyprlock
       grim
       slurp
       swappy

@@ -5,6 +5,25 @@
       focus-follows-mouse.enable = true;
     };
 
+    window-rules = [
+      {
+        matches = [{app-id = "^steam$";}];
+        default-column-width = {};
+      }
+      {
+        matches = [{title = "^Steam - ";}];
+        open-floating = true;
+      }
+      {
+        matches = [{title = "^Steam Guard";}];
+        open-floating = true;
+      }
+      {
+        matches = [{title = ".* - Steam";}];
+        open-floating = true;
+      }
+    ];
+
     outputs."DP-7".position.x = 0;
     outputs."DP-7".position.y = 0;
 
@@ -13,7 +32,6 @@
 
     spawn-at-startup = [
       {argv = ["bash" "-c" "wl-paste --watch cliphist store &"];}
-      {argv = ["hypridle"];}
     ];
 
     binds = with config.lib.niri.actions; {
