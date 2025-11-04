@@ -5,6 +5,9 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./modules/podman.nix
+  ];
   # Nixpkgs configuration
   nixpkgs = {
     overlays = [
@@ -111,6 +114,9 @@
 
   # Programs
   programs.dconf.enable = true;
+
+  # Services for file managers
+  services.gvfs.enable = true; # Virtual filesystems (trash, network, etc)
 
   # Fonts
   fonts.packages = with pkgs; [

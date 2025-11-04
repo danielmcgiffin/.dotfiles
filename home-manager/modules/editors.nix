@@ -1,37 +1,50 @@
-{...}: {
-  xdg.configFile."helix/languages.toml".text = ''
-    [[language]]
-    name = "markdown"
-    language-servers = ["marksman"]
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  programs.helix = {
+    enable = true;
+    package = inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-    [language-server.marksman]
-    command = "marksman"
+    languages = {
+      language-server = {
+        marksman = {
+          command = "marksman";
+        };
+        nil = {
+          command = "nil";
+        };
+        vscode-json-language-server = {
+          command = "vscode-json-language-server";
+          args = ["--stdio"];
+        };
+        taplo = {
+          command = "taplo";
+          args = ["lsp" "stdin"];
+        };
+      };
 
-    [[language]]
-    name = "nix"
-    language-servers = ["nil"]
-    formatter = { command = "alejandra" }
-    auto-format = true
-
-    [language-server.nil]
-    command = "nil"
-
-    [[language]]
-    name = "json"
-    language-servers = ["vscode-json-language-server"]
-
-    [language-server.vscode-json-language-server]
-    command = "vscode-json-language-server"
-    args = ["--stdio"]
-
-    [[language]]
-    name = "toml"
-    language-servers = ["taplo"]
-
-    [language-server.taplo]
-    command = "taplo"
-    args = ["lsp", "stdin"]
-
-    # No packaged KDL language server in nixpkgs right now; tree-sitter handles syntax.
-  '';
+      language = [
+        {
+          name = "markdown";
+          language-servers = ["marksman"];
+        }
+        {
+          name = "nix";
+          language-servers = ["nil"];
+          formatter = { command = "alejandra"; };
+          auto-format = true;
+        }
+        {
+          name = "json";
+          language-servers = ["vscode-json-language-server"];
+        }
+        {
+          name = "toml";
+          language-servers = ["taplo"];
+        }
+      ];
+    };
+  };
 }

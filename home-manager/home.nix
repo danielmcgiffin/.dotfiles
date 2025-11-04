@@ -12,6 +12,8 @@
     ./modules/editors.nix
     ./modules/niri.nix
     ./modules/lockscreen.nix
+    ./modules/devtools.nix
+    ./modules/thunar.nix
   ];
 
   nixpkgs.config = {
@@ -27,11 +29,11 @@
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
     };
     packages = with pkgs; [
-      inputs.helix.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
       brave
       steam
       signal-desktop
+      obsidian
       gemini-cli
       marksman
       nil
@@ -41,9 +43,16 @@
       grim
       slurp
       swappy
+      # File managers
       xfce.thunar
-      yazi
+      xfce.thunar-volman # Volume management
+      xfce.tumbler # Thumbnails
+      gvfs # Virtual filesystems (trash, network, etc)
+      yazi # Terminal file manager
       imv
+
+      # Icon themes (dark, modern, fits UNSC aesthetic)
+      papirus-icon-theme # Clean, modern icons with breeze fallback included
       mpv
       zathura
       spotify

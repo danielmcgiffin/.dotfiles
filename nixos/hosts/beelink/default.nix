@@ -5,6 +5,7 @@
     ../../modules/gaming.nix
     ../../modules/niri.nix
     ../../modules/stylix.nix
+    ../../modules/homelab.nix
   ];
 
   # Hostname
