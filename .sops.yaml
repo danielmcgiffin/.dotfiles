@@ -1,0 +1,17 @@
+# sops configuration
+# Public age key derived from ~/.ssh/id_ed25519.pub
+keys:
+  - &beelink age1u8v97trsfjywam0s4hkvz2nn9pakt7ns6pwu6uwek9q75v54uqzqlwg9qa
+
+# Define which keys can decrypt which files
+creation_rules:
+  - path_regex: secrets/homelab\.yaml$
+    key_groups:
+      - age:
+          - *beelink
+
+  # Add more rules for other secret files as needed
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *beelink
