@@ -7,6 +7,12 @@
     enable = true;
   };
 
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
@@ -93,5 +99,16 @@
   programs.dankMaterialShell = {
     enable = true;
     enableSystemd = true;
+
+    # Fleet-wide default settings (local modal edits persist in settings.json)
+    default.settings = {
+      useFahrenheit = true;
+      clockDateFormat = "MM/dd/yyyy";
+      weatherEnabled = true;
+      useAutoLocation = true;
+      notificationsEnabled = true;
+      brightnessEnabled = true;
+      audioEnabled = true;
+    };
   };
 }

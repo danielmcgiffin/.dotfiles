@@ -4,17 +4,19 @@
   lib,
   ...
 }: {
-  # Swayidle for idle management (works with Niri)
+  # Swayidle for idle management - proper Wayland idle daemon
   services.swayidle = {
     enable = true;
+    systemdTarget = "niri.service";
+
     timeouts = [
       {
         timeout = 300; # 5 minutes - turn off displays
-        command = "niri msg action power-off-monitors";
-        resumeCommand = "niri msg action power-on-monitors";
+        command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+        resumeCommand = "${pkgs.niri}/bin/niri msg action power-on-monitors";
       }
       {
-        timeout = 600; # 10 minutes - lock screen
+        timeout = 900; # 15 minutes - lock screen
         command = "${pkgs.swaylock-effects}/bin/swaylock -f";
       }
       {
@@ -22,14 +24,15 @@
         command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
+
     events = [
       {
         event = "before-sleep";
         command = "${pkgs.swaylock-effects}/bin/swaylock -f";
       }
       {
-        event = "after-resume";
-        command = "niri msg action power-on-monitors";
+        event = "lock";
+        command = "${pkgs.swaylock-effects}/bin/swaylock -f";
       }
     ];
   };

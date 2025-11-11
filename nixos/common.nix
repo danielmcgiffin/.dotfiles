@@ -102,7 +102,22 @@
     tailscale.enable = true;
     upower.enable = true;
     blueman.enable = true;
+
+    # Syncthing for Obsidian vault sync
+    syncthing = {
+      enable = true;
+      user = "epicus";
+      group = "users";
+      dataDir = "/home/epicus/.config/syncthing";
+      configDir = "/home/epicus/.config/syncthing";
+      openDefaultPorts = true;
+    };
   };
+
+  # Ensure Syncthing directory exists with correct permissions
+  systemd.tmpfiles.rules = [
+    "d /srv/obsidian 0755 epicus users -"
+  ];
 
   # Security & Hardware
   security.rtkit.enable = true;

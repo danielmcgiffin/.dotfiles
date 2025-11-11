@@ -4,6 +4,30 @@
   lib,
   ...
 }: {
+  # sops secrets configuration
+  sops.defaultSopsFile = ../../secrets/homelab.yaml;
+  sops.age.keyFile = "/home/epicus/.config/sops/age/keys.txt";
+
+  # Define which secrets to decrypt at runtime
+  sops.secrets.meili_master_key = {};
+  sops.secrets.nextauth_secret = {};
+  sops.secrets.openai_api_key = {};
+
+  # Create environment file templates from secrets
+  sops.templates.karakeep-meilisearch = {
+    content = ''
+      MEILI_MASTER_KEY=${config.sops.placeholder.meili_master_key}
+    '';
+  };
+
+  sops.templates.karakeep-web = {
+    content = ''
+      MEILI_MASTER_KEY=${config.sops.placeholder.meili_master_key}
+      NEXTAUTH_SECRET=${config.sops.placeholder.nextauth_secret}
+      OPENAI_API_KEY=${config.sops.placeholder.openai_api_key}
+    '';
+  };
+
   # Jellyfin media server
   services.jellyfin = {
     enable = true;
@@ -42,8 +66,10 @@
     ];
     environment = {
       MEILI_ENV = "production";
-      MEILI_MASTER_KEY = "fZU0IkXs3G81cRVFBpvUgakjhoJJmYigc9Mp";
     };
+    environmentFiles = [
+      config.sops.templates.karakeep-meilisearch.path
+    ];
   };
 
   # Chrome headless browser for crawling
@@ -72,15 +98,15 @@
     environment = {
       DATA_DIR = "/data";
       MEILI_ADDR = "http://karakeep-meilisearch:7700";
-      MEILI_MASTER_KEY = "fZU0IkXs3G81cRVFBpvUgakjhoJJmYigc9Mp";
       BROWSER_WEB_URL = "http://karakeep-chrome:9222";
-      NEXTAUTH_SECRET = "J3ps2Mycer1AsBF/ba94kpuGQCJ1wDB/BfMv";
       NEXTAUTH_URL = "http://localhost:3000";
       OPENAI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
-      OPENAI_API_KEY = "AIzaSyCzNFwy6EihOvNxTYCufGngXXtabalbX9c";
       INFERENCE_TEXT_MODEL = "gemini-2.5-flash";
       INFERENCE_IMAGE_MODEL = "gemini-2.5-flash";
     };
+    environmentFiles = [
+      config.sops.templates.karakeep-web.path
+    ];
   };
 
   # Ensure directories exist with correct permissions

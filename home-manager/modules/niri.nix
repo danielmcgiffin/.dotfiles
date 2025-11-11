@@ -27,11 +27,8 @@ in {
       }
     ];
 
-    outputs."DP-7".position.x = 0;
-    outputs."DP-7".position.y = 0;
-
-    outputs."DP-8".position.x = 1920;
-    outputs."DP-8".position.y = 0;
+    # Monitor positions moved to per-host configs
+    # See nixos/hosts/beelink/default.nix for DP-7/DP-8 configuration
 
     spawn-at-startup = [
       {argv = ["bash" "-c" "wl-paste --watch cliphist store &"];}
@@ -61,6 +58,11 @@ in {
       "Mod+X" = {
         action.spawn = ["dms" "ipc" "call" "powermenu" "toggle"];
         hotkey-overlay.title = "Power Menu";
+      };
+
+      "Mod+L" = {
+        action.spawn = ["swaylock" "-f"];
+        hotkey-overlay.title = "Lock Screen";
       };
 
       "XF86AudioRaiseVolume".action.spawn = ["dms" "ipc" "call" "audio" "increment" "3"];
