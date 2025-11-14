@@ -28,16 +28,31 @@
   nixpkgs.overlays = [inputs.niri.overlays.niri];
 
   # Host-specific niri output configuration
-  home-manager.users.epicus.programs.niri.settings.outputs = {
-    "DP-10".position = {
-      # ASUS VS238
-      x = 1920;
-      y = 0;
+  home-manager.users.epicus.programs.niri.settings = {
+    outputs = {
+      "DP-10".position = {
+        # ASUS VS238
+        x = 1920;
+        y = 0;
+      };
+      "DP-9".position = {
+        # VG248
+        x = 0;
+        y = 0;
+      };
     };
-    "DP-9".position = {
-      # VG248
-      x = 0;
-      y = 0;
+
+    # Named workspaces
+    workspaces = {
+      "chat" = {
+        open-on-output = "DP-9"; # Left monitor
+      };
+      "games" = {
+        open-on-output = "DP-10"; # Right monitor
+      };
+      "code" = {
+        open-on-output = "DP-9"; # Left monitor
+      };
     };
   };
 

@@ -12,6 +12,7 @@ in {
       {
         matches = [{app-id = "^steam$";}];
         default-column-width = {};
+        open-on-workspace = "games";
       }
       {
         matches = [{title = "^Steam - ";}];
@@ -24,6 +25,22 @@ in {
       {
         matches = [{title = ".* - Steam";}];
         open-floating = true;
+      }
+      {
+        matches = [{app-id = "^signal$";}];
+        open-on-workspace = "chat";
+      }
+      {
+        matches = [{app-id = "^discord$";}];
+        open-on-workspace = "chat";
+      }
+      {
+        matches = [{app-id = "^com.discordapp.Discord$";}];
+        open-on-workspace = "chat";
+      }
+      {
+        matches = [{app-id = "^ghostty$";}];
+        open-on-workspace = "code";
       }
     ];
 
@@ -129,6 +146,15 @@ in {
       "Mod+K".action = focus-column-last;
       "Mod+Shift+K".action = move-column-to-last;
 
+      # Named workspaces
+      "Mod+C".action.focus-workspace = "chat";
+      "Mod+G".action.focus-workspace = "games";
+      "Mod+D".action.focus-workspace = "code";
+      "Mod+Shift+C".action.move-column-to-workspace = "chat";
+      "Mod+Shift+G".action.move-column-to-workspace = "games";
+      "Mod+Shift+D".action.move-column-to-workspace = "code";
+
+      # Numbered workspaces
       "Mod+1".action.focus-workspace = 1;
       "Mod+2".action.focus-workspace = 2;
       "Mod+3".action.focus-workspace = 3;
