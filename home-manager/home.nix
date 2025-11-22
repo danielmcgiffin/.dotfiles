@@ -36,6 +36,7 @@
       obsidian
       marksman
       nil
+      nodejs
       nodePackages.vscode-langservers-extracted
       taplo
       alejandra

@@ -5,6 +5,9 @@
 }: {
   programs.bash = {
     enable = true;
+    shellAliases = {
+      gemini = "npx @google/gemini-cli@latest chat";
+    };
   };
 
   programs.direnv = {
