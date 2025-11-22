@@ -34,7 +34,6 @@
       steam
       signal-desktop
       obsidian
-      gemini-cli
       marksman
       nil
       nodePackages.vscode-langservers-extracted
