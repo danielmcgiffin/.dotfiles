@@ -15,6 +15,11 @@ in {
         open-on-workspace = "games";
       }
       {
+        matches = [{app-id = "^steam_app_.*";}];
+        open-fullscreen = true;
+        open-on-workspace = "games";
+      }
+      {
         matches = [{title = "^Steam - ";}];
         open-floating = true;
       }

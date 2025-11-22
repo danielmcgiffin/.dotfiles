@@ -60,6 +60,7 @@
       xfce.thunar-archive-plugin
       file-roller
       discord
+      qbittorrent
       networkmanagerapplet
       v4l-utils
     ];

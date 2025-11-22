@@ -98,7 +98,7 @@
 
   programs.dankMaterialShell = {
     enable = true;
-    enableSystemd = true;
+    systemd.enable = true;
 
     # Fleet-wide default settings (local modal edits persist in settings.json)
     default.settings = {

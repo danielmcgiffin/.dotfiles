@@ -19,10 +19,6 @@
         timeout = 900; # 15 minutes - lock screen
         command = "${pkgs.swaylock-effects}/bin/swaylock -f";
       }
-      {
-        timeout = 1800; # 30 minutes - suspend
-        command = "${pkgs.systemd}/bin/systemctl suspend";
-      }
     ];
 
     events = [

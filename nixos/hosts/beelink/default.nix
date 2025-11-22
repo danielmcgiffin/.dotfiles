@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{inputs, pkgs, ...}: {
   imports = [
     ./hardware-configuration-desktop.nix
     ../../common.nix
@@ -13,6 +13,21 @@
 
   # Console keymap
   console.keyMap = "us";
+
+  # Load AMDGPU early for the 8745HS
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
+  # Prevent the system from suspending automatically (Crucial for your server apps)
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchExternalPower = "ignore";
+    settings = {
+      Login = {
+        IdleAction = "ignore";
+        IdleActionSec = "0";
+      };
+    };
+  };
 
   # Boot configuration
   boot.loader.efi.efiSysMountPoint = "/boot";
@@ -30,13 +45,13 @@
   # Host-specific niri output configuration
   home-manager.users.epicus.programs.niri.settings = {
     outputs = {
-      "DP-10".position = {
-        # ASUS VS238
+      "Ancor Communications Inc ASUS VS238 E4LMTF019451".position = {
+        # ASUS VS238 (right monitor)
         x = 1920;
         y = 0;
       };
-      "DP-9".position = {
-        # VG248
+      "Ancor Communications Inc VG248 LCLMQS000611".position = {
+        # VG248 (left monitor)
         x = 0;
         y = 0;
       };
@@ -45,13 +60,13 @@
     # Named workspaces
     workspaces = {
       "chat" = {
-        open-on-output = "DP-9"; # Left monitor
+        open-on-output = "Ancor Communications Inc VG248 LCLMQS000611"; # Left monitor
       };
       "games" = {
-        open-on-output = "DP-10"; # Right monitor
+        open-on-output = "Ancor Communications Inc ASUS VS238 E4LMTF019451"; # Right monitor
       };
       "code" = {
-        open-on-output = "DP-9"; # Left monitor
+        open-on-output = "Ancor Communications Inc VG248 LCLMQS000611"; # Left monitor
       };
     };
   };
