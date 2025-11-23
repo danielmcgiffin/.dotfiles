@@ -62,7 +62,7 @@
       ];
 
       trusted-public-keys = [
-	"niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mu1S17Z6oezYhGhR+3W2964="
+	"niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
         "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
         "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       ];

@@ -13,13 +13,16 @@
   # Console keymap
   console.keyMap = "colemak";
 
+  # Use niri-unstable
+  niri.useUnstable = true;
+
   # Wireplumber for pipewire
   services.pipewire.wireplumber.enable = true;
 
   # Niri cachix
   nix.settings.substituters = ["https://niri.cachix.org"];
   nix.settings.trusted-public-keys = [
-    "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mu1S17Z6oezYhGhR+3W2964="
+    "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
   ];
 
   # User in video group
