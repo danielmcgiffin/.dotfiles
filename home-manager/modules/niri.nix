@@ -10,13 +10,35 @@ in {
 
     window-rules = [
       {
+        # FitGirl/Inno Setup installer windows - keep them floating and visible
+        # MUST come before steam_app rules to prevent installers from going fullscreen
+        matches = [
+          {title = "^Setup$";}
+          {title = ".*[Ss]etup.*";}
+          {title = ".*[Ii]nstall.*";}
+          {title = ".*FitGirl.*";}
+          {title = ".*Inno Setup.*";}
+          {title = ".*Complete.*";}
+          {title = ".*Finish.*";}
+          {title = ".*Wizard.*";}
+          {title = ".*Progress.*";}
+        ];
+        open-floating = true;
+      }
+      {
         matches = [{app-id = "^steam$";}];
         default-column-width = {};
         open-on-workspace = "games";
       }
       {
+        # Steam games go fullscreen, but exclude installers
         matches = [{app-id = "^steam_app_.*";}];
-        open-fullscreen = true;
+        excludes = [
+          {title = ".*[Ss]etup.*";}
+          {title = ".*[Ii]nstall.*";}
+          {title = ".*FitGirl.*";}
+        ];
+        # TEMPORARILY DISABLED: open-fullscreen = true;
         open-on-workspace = "games";
       }
       {
