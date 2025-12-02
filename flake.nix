@@ -81,6 +81,17 @@
           inputs.sops-nix.nixosModules.sops
         ];
       };
+
+      # Kids Laptop
+      nixie = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./nixos/hosts/nixie
+          home-manager.nixosModules.home-manager
+          niri.nixosModules.niri
+          stylix.nixosModules.stylix
+        ];
+      };
     };
   };
 }
