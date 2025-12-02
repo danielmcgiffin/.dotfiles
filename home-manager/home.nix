@@ -69,6 +69,9 @@
 
       # Screen recording & streaming
       obs-studio
+
+      # Remote desktop
+      rustdesk
     ];
   };
 

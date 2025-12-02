@@ -19,10 +19,10 @@
 
   # Prevent the system from suspending automatically (Crucial for your server apps)
   services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchExternalPower = "ignore";
     settings = {
       Login = {
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
         IdleAction = "ignore";
         IdleActionSec = "0";
       };
