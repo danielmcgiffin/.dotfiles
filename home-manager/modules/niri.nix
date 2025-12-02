@@ -1,12 +1,21 @@
-{config, osConfig, ...}: let
+{
+  config,
+  osConfig,
+  ...
+}: let
   # Use Colemak on noxbox, US on beelink
-  keyboardLayout = if osConfig.networking.hostName == "noxbox" then "us(colemak)" else "us";
+  keyboardLayout =
+    if osConfig.networking.hostName == "noxbox"
+    then "us(colemak)"
+    else "us";
 in {
   programs.niri.settings = {
     input = {
       keyboard.xkb.layout = keyboardLayout;
       focus-follows-mouse.enable = true;
     };
+
+    cursor = 18;
 
     window-rules = [
       {
@@ -208,9 +217,7 @@ in {
       "Mod+Shift+F".action = fullscreen-window;
 
       "Mod+Minus".action.set-column-width = "-10%";
-      "Mod+Plus".action.set-column-width = "+10%";
-      "Mod+Shift+Minus".action.set-window-width = "-10%";
-      "Mod+Shift+Plus".action.set-window-width = "+10%";
+      "Mod+Shift+Equal".action.set-column-width = "+10%";
 
       "Mod+Alt+Shift+E".action = quit;
       "Mod+Shift+Slash".action = show-hotkey-overlay;
