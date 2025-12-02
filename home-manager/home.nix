@@ -63,6 +63,12 @@
       qbittorrent
       networkmanagerapplet
       v4l-utils
+
+      # Ebook management
+      calibre
+
+      # Screen recording & streaming
+      obs-studio
     ];
   };
 

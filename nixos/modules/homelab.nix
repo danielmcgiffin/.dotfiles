@@ -57,6 +57,25 @@
     };
   };
 
+  # Calibre-web - Web interface for Calibre library
+  # Supports uploads, OPDS feed, and Kobo sync
+  virtualisation.oci-containers.containers.calibre-web = {
+    image = "lscr.io/linuxserver/calibre-web:latest";
+    ports = [
+      "8083:8083" # Web UI
+    ];
+    volumes = [
+      "/srv/homelab/calibre-web:/config"
+      "/srv/media/books:/books"
+    ];
+    environment = {
+      PUID = "1000";
+      PGID = "100";
+      TZ = "America/New_York";
+      DOCKER_MODS = "linuxserver/mods:universal-calibre"; # Enables ebook conversion
+    };
+  };
+
   # Karakeep - Self-hosted bookmark manager with AI
   # Meilisearch search engine
   virtualisation.oci-containers.containers.karakeep-meilisearch = {
@@ -114,14 +133,16 @@
     "d /srv/homelab 0755 epicus users -"
     "d /srv/homelab/jellyfin 0755 epicus users -"
     "d /srv/homelab/qbittorrent 0755 epicus users -"
+    "d /srv/homelab/calibre-web 0755 epicus users -"
     "d /srv/homelab/karakeep 0755 epicus users -"
     "d /srv/homelab/karakeep/data 0755 epicus users -"
     "d /srv/homelab/karakeep/meilisearch 0755 epicus users -"
     "d /srv/media 0755 epicus users -"
     "d /srv/media/downloads 0755 epicus users -"
+    "d /srv/media/books 0755 epicus users -"
   ];
 
   # Open firewall for services
-  networking.firewall.allowedTCPPorts = [3000 8081 6881]; # Karakeep, qBit UI, qBit torrent
+  networking.firewall.allowedTCPPorts = [3000 8081 8083 6881]; # Karakeep, qBit UI, Calibre-web, qBit torrent
   networking.firewall.allowedUDPPorts = [6881]; # qBit torrent
 }
