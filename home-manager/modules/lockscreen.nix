@@ -21,16 +21,10 @@
       }
     ];
 
-    events = [
-      {
-        event = "before-sleep";
-        command = "${pkgs.swaylock-effects}/bin/swaylock -f";
-      }
-      {
-        event = "lock";
-        command = "${pkgs.swaylock-effects}/bin/swaylock -f";
-      }
-    ];
+    events = {
+      before-sleep = "${pkgs.swaylock-effects}/bin/swaylock -f";
+      lock = "${pkgs.swaylock-effects}/bin/swaylock -f";
+    };
   };
 
   # Swaylock UNSC theme - Stylix handles colors automatically
