@@ -75,9 +75,11 @@
 
     greetd = {
       enable = true;
-      settings.default_session = {
-        command = "${config.programs.niri.package}/bin/niri-session";
-        user = "epicus";
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${config.programs.niri.package}/bin/niri-session";
+          user = "greeter";
+        };
       };
     };
 
@@ -169,19 +171,49 @@
   ];
 
   # User configuration
-  users.users.epicus = {
-    isNormalUser = true;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDE1cfusRXHG5+r+G4/HmO42wjrFIrahD6uXgsDTITp= danielmcgiffin@gmail.com"
-    ];
-    extraGroups = ["wheel" "networkmanager"];
+  users.users = {
+    # Admin user
+    epicus = {
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDE1cfusRXHG5+r+G4/HmO42wjrFIrahD6uXgsDTITp= danielmcgiffin@gmail.com"
+      ];
+      extraGroups = ["wheel" "networkmanager"];
+    };
+
+    # Kids users (no sudo access)
+    brendan = {
+      isNormalUser = true;
+      extraGroups = ["networkmanager"];
+    };
+
+    david = {
+      isNormalUser = true;
+      extraGroups = ["networkmanager"];
+    };
+
+    james = {
+      isNormalUser = true;
+      extraGroups = ["networkmanager"];
+    };
+
+    matthew = {
+      isNormalUser = true;
+      extraGroups = ["networkmanager"];
+    };
   };
 
   # Home Manager
   home-manager = {
     useUserPackages = true;
     extraSpecialArgs = {inherit inputs;};
-    users.epicus = import ../home-manager/home.nix;
+    users = {
+      epicus = import ../home-manager/users/epicus.nix;
+      brendan = import ../home-manager/users/kids/brendan.nix;
+      david = import ../home-manager/users/kids/david.nix;
+      james = import ../home-manager/users/kids/james.nix;
+      matthew = import ../home-manager/users/kids/matthew.nix;
+    };
   };
 
   # State version
