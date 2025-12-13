@@ -14,6 +14,16 @@
     git
   ];
 
+  nix.buildMachines = [{
+    hostName = "noxbox";
+    systems = [ "x86_64-linux" ];
+    maxJobs = 8;
+    speedFactor = 2;
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+  }]; 
+  nix.distributedBuilds = true;
+  nix.extraOptions = '' builders-use-substitutes = true '';
+
   # Niri configuration
   niri.useUnstable = true;
   nix.settings.substituters = ["https://niri.cachix.org"];

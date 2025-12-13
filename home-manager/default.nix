@@ -1,8 +1,7 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+# Parameterized home configuration
+# Usage: import ./default.nix { username = "david"; }
+{ username }:
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.dankMaterialShell.homeModules.dankMaterialShell.default
     inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
@@ -22,11 +21,12 @@
   };
 
   home = {
-    username = "epicus";
-    homeDirectory = "/home/epicus";
+    inherit username;
+    homeDirectory = "/home/${username}";
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      XDG_CURRENT_DESKTOP = "niri";
     };
     packages = with pkgs; [
       inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -66,12 +66,6 @@
 
       # Ebook management
       calibre
-
-      # Screen recording & streaming
-#      obs-studio
-
-      # Remote desktop
-#      rustdesk
     ];
   };
 
