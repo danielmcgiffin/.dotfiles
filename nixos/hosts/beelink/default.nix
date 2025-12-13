@@ -101,4 +101,9 @@
       ExecStart = "/run/current-system/sw/bin/bash -c 'chvt 2; sleep 0.2; chvt 1'";
     };
   };
+
+  # Allow nixie to use this machine as a remote builder
+  users.users.epicus.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJDdws91C/5zi+jrG5n8OhS2hWITGJTGobgtN63YQgmQ root@nixie"
+  ];
 }

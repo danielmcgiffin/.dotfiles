@@ -159,6 +159,12 @@ in {
       "Mod+Shift+I".action = focus-monitor-up;
       "Mod+Shift+O".action = focus-monitor-right;
 
+      # Quick monitor switching
+      "Mod+Comma".action = focus-monitor-left;
+      "Mod+Period".action = focus-monitor-right;
+      "Mod+Shift+Comma".action = consume-window-into-column;
+      "Mod+Shift+Period".action = expel-window-from-column;
+
       "Mod+Ctrl+Left".action = move-column-left;
       "Mod+Ctrl+Down".action = move-window-down;
       "Mod+Ctrl+Up".action = move-window-up;
@@ -210,8 +216,6 @@ in {
       "Mod+Shift+8".action.move-column-to-workspace = 8;
       "Mod+Shift+9".action.move-column-to-workspace = 9;
 
-      "Mod+Comma".action = consume-window-into-column;
-      "Mod+Period".action = expel-window-from-column;
 
       "Mod+F".action = maximize-column;
       "Mod+Shift+F".action = fullscreen-window;

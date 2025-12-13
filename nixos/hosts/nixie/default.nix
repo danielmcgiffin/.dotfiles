@@ -15,12 +15,14 @@
   ];
 
   nix.buildMachines = [{
-    hostName = "noxbox";
+    hostName = "beelink";
     systems = [ "x86_64-linux" ];
     maxJobs = 8;
     speedFactor = 2;
     supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-  }]; 
+    sshUser = "epicus";
+    sshKey = "/root/.ssh/id_builder";
+  }];
   nix.distributedBuilds = true;
   nix.extraOptions = '' builders-use-substitutes = true '';
 
