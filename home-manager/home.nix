@@ -71,7 +71,7 @@
 #      obs-studio
 
       # Remote desktop
-#      rustdesk
+      # rustdesk
     ];
   };
 
