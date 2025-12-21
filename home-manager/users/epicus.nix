@@ -21,6 +21,7 @@
 
       # Browsers
       brave
+      nyxt
 
       # Gaming
       steam
