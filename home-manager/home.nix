@@ -13,6 +13,7 @@
     ./modules/niri.nix
     ./modules/lockscreen.nix
     ./modules/devtools.nix
+    ./modules/ssh.nix
     ./modules/thunar.nix
   ];
 

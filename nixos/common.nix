@@ -77,7 +77,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd ${config.programs.niri.package}/bin/niri-session";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${config.programs.niri.package}/bin/niri-session";
           user = "greeter";
         };
       };
@@ -131,6 +131,60 @@
 
   # Programs
   programs.dconf.enable = true;
+
+  # Enable nix-ld to run unpatched dynamic binaries (like Arduino IDE)
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Core
+    stdenv.cc.cc.lib
+    zlib
+    fuse3
+    # Electron/Chrome dependencies
+    alsa-lib
+    at-spi2-atk
+    at-spi2-core
+    atk
+    cairo
+    cups
+    curl
+    dbus
+    expat
+    fontconfig
+    freetype
+    gdk-pixbuf
+    glib
+    gtk3
+    libGL
+    libappindicator-gtk3
+    libdrm
+    libnotify
+    libpulseaudio
+    libsecret
+    libuuid
+    libxkbcommon
+    mesa
+    libgbm
+    nspr
+    nss
+    pango
+    pipewire
+    systemd
+    # X11
+    xorg.libX11
+    xorg.libXScrnSaver
+    xorg.libXcomposite
+    xorg.libXcursor
+    xorg.libXdamage
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libXi
+    xorg.libXrandr
+    xorg.libXrender
+    xorg.libXtst
+    xorg.libxcb
+    xorg.libxkbfile
+    xorg.libxshmfence
+  ];
 
   # Services for file managers
   services.gvfs.enable = true; # Virtual filesystems (trash, network, etc)

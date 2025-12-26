@@ -7,6 +7,7 @@
   imports = [
     ./base.nix
     ../modules/git.nix
+    ../modules/ssh.nix
     ../modules/editors.nix
     ../modules/devtools.nix
   ];
