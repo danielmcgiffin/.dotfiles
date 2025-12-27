@@ -52,6 +52,9 @@
 
   # Networking
   networking.networkmanager.enable = true;
+  networking.firewall.allowedUDPPortRanges = [
+    { from = 60000; to = 61000; } # Mosh
+  ];
 
   # Localization
   time.timeZone = "America/New_York";
@@ -124,6 +127,19 @@
   # Security & Hardware
   security.rtkit.enable = true;
   security.polkit.enable = true;
+
+  # Allow wheel group to run nixos-rebuild without password
+  security.sudo.extraRules = [
+    {
+      groups = [ "wheel" ];
+      commands = [
+        {
+          command = "${pkgs.nixos-rebuild}/bin/nixos-rebuild";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
   hardware.bluetooth.enable = true;
@@ -222,6 +238,7 @@
     tree
     ripgrep
     claude-code
+    mosh
   ];
 
   # User configuration
