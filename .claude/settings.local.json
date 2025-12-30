@@ -11,7 +11,9 @@
       "Bash(niri msg:*)",
       "Bash(git fetch:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nEnable Helix editor and update Claude permissions\n\n- Uncomment Helix flake input and home-manager configuration\n- Add LSP support for markdown, nix, json, and toml\n- Extend Claude bash permissions for additional commands\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nEnable Helix editor and update Claude permissions\n\n- Uncomment Helix flake input and home-manager configuration\n- Add LSP support for markdown, nix, json, and toml\n- Extend Claude bash permissions for additional commands\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []

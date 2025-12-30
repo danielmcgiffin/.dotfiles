@@ -31,6 +31,7 @@
     };
     packages = with pkgs; [
       inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
       brave
       steam
       signal-desktop
@@ -72,7 +73,7 @@
 #      obs-studio
 
       # Remote desktop
-      # rustdesk
+      rustdesk
     ];
   };
 
