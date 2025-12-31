@@ -16,10 +16,9 @@
   # Fix Asus laptop Super key not working
   # Many Asus laptops have the Super key disabled by default
   services.udev.extraHwdb = ''
-    # Asus laptop keyboard - enable Super/Meta keys
+    # Asus laptop keyboard - enable Super/Meta key
     evdev:input:b0003v0B05p1866*
      KEYBOARD_KEY_700e3=leftmeta
-     KEYBOARD_KEY_700e7=rightmeta
   '';
 
   # Use niri-unstable
